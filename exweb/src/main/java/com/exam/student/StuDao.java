@@ -100,6 +100,32 @@ public class StuDao {
 			}
 			return num;
 		}
+	
+//	public int update(String id) {
+//		int num = 0;
+//		String updateSql = "Update INTO student" + "(stu_no, stu_name, stu_score)"
+//		                   + "VALUES(?, ?, ?)"+ "WHERE  stu_no = ?";
+//				
+//		
+//		try (
+//				Connection conn = DriverManager.getConnection(url, user, password); //데이터베이스 접속 연결
+//				//해당 데이터베이스 연결을 통해서 실행할 SQL문 준비
+//				
+//				PreparedStatement pstmt = conn.prepareStatement(updateSql);
+//		) {
+//			
+//			// ?에 주이할 값의 타입에 따라서 setXXX() 메서드 사용
+//						pstmt.setString(1, id.); //pstmt에 담긴 SQL문의 첫번째 ?에 id 값을 주입
+//						pstmt.setString(2, vo.getStu_name()); //pstmt에 담긴 SQL문의 첫번째 ?에 pass 값을 주입			
+//						pstmt.setInt(3, vo.getStu_score()); //pstmt에 담긴 SQL문의 첫번째 ?에 point 값을 주입			
+//						num = pstmt.executeUpdate(); //SLQ문 실행결과 변경된 레코드 수를 반환				
+//			
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return num;
+//	}
 		
 	
 }

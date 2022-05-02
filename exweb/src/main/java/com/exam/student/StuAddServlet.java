@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/student/add.do")
 public class StuAddServlet extends HttpServlet {		
-	StuDao memberDao = new StuDao();
+	StuDao StuDao = new StuDao();
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +24,7 @@ public class StuAddServlet extends HttpServlet {
         vo.setStu_no(req.getParameter("stu_no"));
         vo.setStu_name(req.getParameter("stu_name"));
         vo.setStu_score(Integer.parseInt(req.getParameter("stu_score")));       
-        int num = memberDao.insert(vo);		
+        int num = StuDao.insert(vo);		
       
         
         

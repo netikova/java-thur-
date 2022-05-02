@@ -1,5 +1,6 @@
 <!-- jsp는 자바 안에서 html작성이 불편하기 때문에
 html안에 java를 작성하기 위해 사용한다. 주석처리도 다르다. -->
+<%@page import="java.util.Date"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.exam.member.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -129,17 +130,125 @@ ${pageContext.request.contextPath} <%--EL로 작성할 때는 속성의 첫글�
 현재 JSP 파일에서 사용하고 싶은 태그라이브러리를 taglib 디렉티브로 지정
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    int score = 80;
-    pageContext.setAttribute("score", 80);
+/*     int score = 80;
+    pageContext.setAttribute("score", 80); */
 %>
-<c:if test="${score>60}">통과</c:if> <!-- 접두어 c로 설정 -->
+pageContext,request,session,servletContext에 속성 저장
+ <c:set scope="page" var="score" value="80"></c:set>
+ 속성제거
+ <c:remove scope="page" var="score" />
+ 조건문
+<c:if test="${score>60}">통과</c:if> <!-- 접두어 c로 설정 --> 
 <c:choose>
      <c:when test="${score>=90}">최우수</c:when>
      <c:when test="${score>=80}">우수</c:when>
      <c:otherwise>보통</c:otherwise>
 </c:choose>
+반복문
+<%-- <% for(int num = 1; num <= 10; num +=2) out.print(num); %> --%>\
 
 <c:forEach var="num" begin="1" end="10" step="2">${num}</c:forEach>
+<ul>
+<%-- <%for (int no:arr) out.print("<li>"+no+"</li>");%> --%>
+<%-- <c:forEach var="no" items="${ar}"> <li>${no}</li></c:forEach> --%>
+<c:forEach var="no" items="${ar}" varStatus="st">
+    <li>
+    ${no} == ${st.current} 현재값
+    ${st.index} 몇번째반복인지(0부터)
+    ${st.count} 몇번째반복인지(1부터)
+    ${st.first} 첫번째반복인지여부
+    ${st.last} 마지막반복인지여부
+    ${st.begin} 태그의begin속성값
+    ${st.end} 태그의 end속성값
+    ${st.step} 태그의 step속성값
+        </li>
+</c:forEach>
+</ul>
+<c:forTokens var="tk" items="${'a,b:c,d'}" delims=",:">[${tk}]</c:forTokens> 
+<!-- delims = 구별 값 -->
+출력
+<% pageContext.setAttribute("str", "<h1>제목</h1>"); %> 
+<!-- 태그로 해석이 안되고 글자 그대로 표현하기 위해서 명령문을 이용한다. -->
+${str}
+<c:out value="${str}"></c:out>
+
+주소처리
+<a href="menu.jsp">메뉴JSP로이동</a>
+<a href="<%=request.getContextPath() %>/menu.jsp">메뉴JSP로이동</a>
+<a href="<%=request.getContextPath() %>/exweb/menu.jsp">메뉴JSP로이동</a>
+<a href="${pageContext.request.contextPath}/menu.jsp">메뉴JSP로이동</a>
+경로가 /로 시작하면 컨텍스트패스를 앞에 자동으로 붙여준다
+<a href="<c:url value='/menu.jsp'/>">메뉴JSP로 이동</a>
+다른 서블릿 또는 JSP 를 포함
+<c:import url="menu.jsp"></c:import>
+
+JSP파일의 내용을 이곳에 복사한 후 하나의 서블릿으로 변환
+<%@ include file="menu.jsp" %>
+다른 서블릿 또는 JSP를 실행한 결과(출력내용)를 이곳에 포함
+<jsp:include page="menu.jsp" />
+다른 서블릿 또는 JSPfmf실행한 결과를 포함 
+(프로젝트 외부의 사이트 내용 포함 가능)
+<c:import url="menu.jsp"/>
+<%-- <c:import url="http://google.com"/> --%>
+
+<%-- <% response.sendRedirect(request.getContextPath() + "/menu.jsp"); %> --%>
+<%-- <c:redirect url="/menu.jsp"/> --%>
+
+<%-- <c:param/> 태그를 사용하여 주소처리 태그에 파라미터 추가 가능 --%>
+
+예외처리
+<c:catch var="e">
+    <% int x = 5/0; %>
+</c:catch>
+예외발생 : ${e.message}
+
+<h2>국제화/포맷팅</h2>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<% pageContext.setAttribute("d", new Date()); %>
+현재 시간 : ${d}
+자바 Date 객체를 원하는 형태의 문자열로 변환 
+<fmt:formatDate value="${d}" pattern="yyyy/MM/dd HH:mm:ss"/>
+날짜 시간 문자열을 자바 Date 객체로 변환
+<fmt:parseDate value="2020/08/15 13:24:56" pattern="yyyy/MM/dd HH:mm:ss" var="d2"/>
+${d2}
+
+<% pageContext.setAttribute("n", 1234.56); %>
+숫자값을 문자열로 변환
+<fmt:formatNumber value="${n}" pattern="###,###.###" />
+<fmt:formatNumber value="${n}" pattern="000,000.000" />
+숫자문자열을 숫자값으로 변환
+<fmt:parseNumber value="12,345,67" pattern="###,###.###" var="n2" /> 
+${n2}
+
+JSTL 국제화 태그들이 사용할 로케일 지정 
+(미지정시 Accept-Language 요청 헤더 값 사용)
+"언어코드_국가코드" 또는 "언어코드-국가코드" 또는 "국가코드"
+<fmt:setLocale value="en_US" />
+
+메시지를 저장한 프로퍼티 파일명이
+"클래스패스/폴더명/번들명_언어_국가.properties"인 경우
+basename은 "폴더명.번들명"
+<fmt:setBundle basename="msg" var="mb" />
+<fmt:message bundle="${mb}" key="str" />
+
+함수
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<br> ${fn:length("aBcD")} <%="aBcD".length() %>
+<br> ${fn:contains("aBcD","Bc")} <%="aBcD".contains("Bc") %>    
+<br> ${fn:containsIgnoreCase("aBcD","bC")}  <%="aBcD".toLowerCase().contains("bC".toLowerCase()) %>
+<br> ${fn:startsWith("aBcD","aB")} <%="aBcD".startsWith("aB") %>
+<br> ${fn:endsWith("aBcD","cD")} <%="aBcD".endsWith("cD") %>
+<br> ${fn:escapeXml("<h1>제목</h1>")} <c:out value="<h1>제목</h1>" />
+<br> ${fn:indexOf("aBcD","Bc")} <%="aBcD".indexOf("Bc") %>
+<br> ${fn:join(ar,"::")} <%=String.join("::", "3,6,9".split(",") )%>
+<br> ${(fn:split("a,B:c,D",",:"))[2]} <%="a,B:c,D".split("[,:]")[2] %>
+<br> ${fn:replace("aBcDBc","Bc","efg")} <%="aBcDBc".replace("Bc","efg") %>
+<br> ${fn:substring("aBcD", 1, 2)} <%="aBcD".substring(1,2) %>
+<br> ${fn:substringAfter("aBcD", "Bc")}
+<br> ${fn:substringBefore("aBcD", "Bc")}
+<br> ${fn:toLowerCase("aBcD")} <%="aBcD".toLowerCase() %>
+<br> ${fn:toUpperCase("aBcD")} <%="aBcD".toUpperCase() %>
+<br> [${fn:trim("   aB cD  ")}] [<%="   aB cD  ".trim() %>]
 
 </body>
 </html>
