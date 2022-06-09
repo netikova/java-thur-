@@ -1,10 +1,10 @@
 <!-- jsp는 자바 안에서 html작성이 불편하기 때문에
 html안에 java를 작성하기 위해 사용한다. 주석처리도 다르다. -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.exam.member.MemberVo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>

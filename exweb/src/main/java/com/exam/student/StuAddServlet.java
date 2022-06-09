@@ -15,16 +15,23 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/student/add.do")
 public class StuAddServlet extends HttpServlet {		
-	StuDao StuDao = new StuDao();
+	StuDao StuDao = new StuDaoBatis();
+	
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		req.getRequestDispatcher("/WEB-INF/jsp/student/StuAddForm.jsp").forward(req, resp);
+	}
 	
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	//	req.setCharacterEncoding("UTF-8");
 		StuVo vo = new StuVo();
-        vo.setStu_no(req.getParameter("stu_no"));
-        vo.setStu_name(req.getParameter("stu_name"));
-        vo.setStu_score(Integer.parseInt(req.getParameter("stu_score")));       
-        int num = StuDao.insert(vo);		
+        vo.setStuNo(req.getParameter("stu_no"));
+        vo.setStuName(req.getParameter("stu_name"));
+        vo.setStuScore(Integer.parseInt(req.getParameter("stu_score")));       
+        int num = StuDao.insertStu(vo);		
       
         
         

@@ -15,13 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/student/del.do")
 public class StuDelServlet extends HttpServlet {		
-	StuDao StuDao = new StuDao();
+	StuDao StuDao = new StuDaoBatis();
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");       
         String stu_no = req.getParameter("stu_no");        
-        int num = StuDao.delete(stu_no);
+        int num = StuDao.delStu(stu_no);
         
         
         

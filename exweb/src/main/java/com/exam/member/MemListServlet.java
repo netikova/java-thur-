@@ -3,6 +3,7 @@ package com.exam.member;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,19 +13,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //과제
 //1.학생목록, 추가, 삭제 서블릿과 JSP 파일을 구현(MVC패턴)
 //2.학생정보 수정 기능 추가
+//"http://localhost:8000/exweb/member/list.do"로 요청을 보내면,
+// 웹브라우저에 회원목록이 출력되도록 구현
 @WebServlet("/member/list.do")
 public class MemListServlet extends HttpServlet {		
-	MemberDao memberDao = new MemberDao();
+	MemberDao memberDao = MemberDaoBatis.getInstance();
 	
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// "http://localhost:8000/exweb/member/list.do"로 요청을 보내면,
-		// 웹브라우저에 회원목록이 출력되도록 구현
-		ArrayList<MemberVo> list = memberDao.selectList();
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		MemberVo vo = (MemberVo) session.getAttribute("loginUser"); //로그인한 사용자 정보를 가져오기(session에서 꺼내온 user정보가 컴퓨터가 인식할 수 있도록 membervo형식으로 강제 형변환)
+		
+	    if(vo==null) {//로그인한 적이 없다면
+	    	resp.sendRedirect(req.getContextPath() + "/member/login.do"); //로그인 페이지로 이동
+	    	return;
+	    }
+	    
+		List<MemberVo> list = memberDao.selectMemberList();
 		
 		req.setAttribute("memList", list);
 		

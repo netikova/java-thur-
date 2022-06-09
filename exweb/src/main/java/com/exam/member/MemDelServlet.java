@@ -15,13 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/member/del.do")
 public class MemDelServlet extends HttpServlet {		
-	MemberDao memberDao = new MemberDao();
+	MemberDao memberDao = MemberDaoBatis.getInstance();
 	
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		req.getParameter("abc").equals("def");
+		
+		
 		req.setCharacterEncoding("UTF-8");       
         String memId = req.getParameter("memId");        
-        int num = memberDao.delete(memId);
+        int num = memberDao.delMember(memId);
         
         //resp.sendRedirect("이동할 사이트 주소"); 명령을 사용하여,
         // 웹브라우저에게 특정 사이트로 이동하라는 명령을 담은 응답을 전송

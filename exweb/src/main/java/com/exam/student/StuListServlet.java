@@ -2,7 +2,7 @@ package com.exam.student;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,20 +17,20 @@ import javax.servlet.http.HttpServletResponse;
 // 학생목록이 출력되도록 구현
 // 과제
 // 지난주에 과제로 했던 학생목록에 학생추가,학생삭제 기능을 추가
-
+// MYBATIS를 이용하여 목록, 추가, 수정, 삭제 구현
 @WebServlet("/student/list.do")
 public class StuListServlet extends HttpServlet {		
-	StuDao StuDao = new StuDao();
+	StuDao StuDao = new StuDaoBatis();
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// "http://localhost:8000/exweb/member/list.do"로 요청을 보내면,
 		// 웹브라우저에 회원목록이 출력되도록 구현
-		ArrayList<StuVo> list = StuDao.selectList();	
+		List<StuVo> list = StuDao.selectStuList();	
 		
-		req.setAttribute("StuList", list);
+		req.setAttribute("stuList", list);
 		
-		RequestDispatcher rd = req.getRequestDispatcher("/StuList.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/jsp/student/StuList.jsp");
 		rd.forward(req, resp);
 		
 /*		req.setCharacterEncoding("UTF-8"); //POST방식으로 전송되는 한글 파라미터 인코딩

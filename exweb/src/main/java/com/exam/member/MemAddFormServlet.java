@@ -14,15 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/member/addform.do")
+//@WebServlet("/member/addform.do")
 public class MemAddFormServlet extends HttpServlet {		
 		
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// "http://localhost:8000/exweb/member/list.do"로 요청을 보내면,
-		// 웹브라우저에 회원목록이 출력되도록 구현
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/member/MemAddForm.jsp").forward(req, resp);
+	}
+
+// "http://localhost:8000/exweb/member/list.do"로 요청을 보내면,
+// 웹브라우저에 회원목록이 출력되도록 구현
 /*		req.setCharacterEncoding("UTF-8"); //POST방식으로 전송되는 한글 파라미터 인코딩
 		String aval = req.getParameter("a"); //파라미터의 값이 1개일때	
 		
@@ -53,7 +55,7 @@ public class MemAddFormServlet extends HttpServlet {
 
 	}
 
-}
+
 
 
 

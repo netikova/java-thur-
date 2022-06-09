@@ -21,7 +21,7 @@ public class StuAddFormServlet extends HttpServlet {
 		// "http://localhost:8000/exweb/member/list.do"로 요청을 보내면,
 		// 웹브라우저에 회원목록이 출력되도록 구현
 		
-		req.getRequestDispatcher("/WEB-INF/jsp/member/StuAddForm.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/jsp/student/StuAddForm.jsp").forward(req, resp);
 ///*		req.setCharacterEncoding("UTF-8"); //POST방식으로 전송되는 한글 파라미터 인코딩
 //		String aval = req.getParameter("a"); //파라미터의 값이 1개일때	
 //		
