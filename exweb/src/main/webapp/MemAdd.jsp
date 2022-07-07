@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@page import="com.exam.member.MemberVo"%>
-<%@page import="com.exam.member.MemberDaoJdbc"%>
+<%@page import="com.exam.exspring.member.MemberVo"%>
+<%@page import="com.exam.exspring.member.MemberDaoJdbc"%>
 
 <%!MemberDaoJdbc memberDao = new MemberDaoJdbc(); //선언부%>
 

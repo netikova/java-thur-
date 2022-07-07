@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@page import="com.exam.student.StuDao"%>
-<%@page import="com.exam.member.MemberDaoJdbc"%>
+<%@page import="com.exam.exspring.member.MemberDaoJdbc"%>
 
 <%!
      StuDao StuDao = new StuDao();

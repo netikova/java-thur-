@@ -4,7 +4,7 @@ html안에 java를 작성하기 위해 사용한다. 주석처리도 다르다. 
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="com.exam.member.MemberVo"%>
+<%@page import="com.exam.exspring.member.MemberVo"%>
 <!DOCTYPE html>
 <html>
 <head>
